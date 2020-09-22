@@ -11,8 +11,8 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <h1>Potluck Planner</h1>
         <Login />
+        <Register />
       </div>
     </Router>
   )
