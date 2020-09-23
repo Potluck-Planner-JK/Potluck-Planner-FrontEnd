@@ -1,10 +1,13 @@
 import React from 'react';
-import {useForm} from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 export const Register = () => {
-  const {register, handleSubmit, watch, error} = useForm();
+  const { register, handleSubmit, watch, errors, reset } = useForm();
 
-  const onSubmit = data => console.log(data)
+  const onSubmit = ({name, location, phone, password}, e) => {
+    e.target.reset(); // reset after form submit
+    console.log(`name: ${name}, location: ${location}, phone:${phone}, password: ${password} `)
+  };
 
   return (
     <div className='form-container'>
@@ -14,43 +17,34 @@ export const Register = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='form-group'>
           <label htmlFor='name'>Event Name</label>
-          <input
-            ref={register({required: true})}
-            type='text'
-            name='name'
-          />
+          <input ref={register({ required: true })} type='text' name='name' />
+          {errors.name && <p>This is required</p>}
         </div>
         <div className='form-group'>
           <label htmlFor='location'>Event Location</label>
           <input
-            ref={register({required: true})} type='text' name='location' />
+            ref={register({ required: true })}
+            type='text'
+            name='location'
+          />
+          {errors.location && <p>This is required</p>}
         </div>
         <div className='form-group'>
           <label htmlFor='phone'>Phone Number</label>
-          <input
-            ref={register({required: true})} type='text' name='phone' />
+          <input ref={register({ required: true })} type='text' name='phone' />
+          {errors.phone && <p>This is required</p>}
         </div>
         <div className='form-group'>
           <label htmlFor='password'>Password</label>
           <input
-            ref={register({required: true, minLength: 6})}
+            ref={register({ required: true, minLength: 6 })}
             type='password'
             name='password'
           />
+          {errors.password && errors.password.type ==="required" && (<p>This is required</p>)}
+          {errors.password && errors.password.type === "minLength" && (<p>Password must be 6 characters or more</p>)}
         </div>
-        <div className='form-group'>
-          <label htmlFor='password2'>Confirm password</label>
-          <input
-            ref={register({required: true, minLength: 6})}
-            type='password'
-            name='password2'
-          />
-        </div>
-        <input
-          ref={register({required: true})}
-          type='submit'
-          value='Register'
-          className='btn btn-primary btn-block'
+        <input type='submit' 
         />
       </form>
     </div>
