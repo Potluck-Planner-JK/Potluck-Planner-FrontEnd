@@ -1,6 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
+import { FormContainer, FormGroup, Input, Header } from '../../Styled/Forms';
 
 export const Register = () => {
   const { register, handleSubmit, watch, errors} = useForm();
@@ -17,48 +18,46 @@ export const Register = () => {
   };
 
   return (
-    <div className='form-container'>
-      <h1>
+    <FormContainer>
+      <Header>
         Potluck <span className='text-primary'>Register</span>
-      </h1>
+      </Header>
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* UserName */}
-        <div className='form-group'>
-          <label htmlFor='name'>Event Name</label>
-          <input ref={register({ required: true })} type='text' name='username' />
-          {errors.name && <p>This is required</p>}
-        </div>
+        <FormGroup>
+          <Input ref={register({ required: true })} type='text' name='username' placeholder='Event Name' />
+          {errors.username && <p>This is required</p>}
+        </FormGroup>
         {/* Password */}
-        <div className='form-group'>
-          <label htmlFor='password'>Password</label>
-          <input
+        <FormGroup>
+          <Input
             ref={register({ required: true, minLength: 6 })}
             type='password'
             name='password'
+            placeholder='Event Password'
           />
           {errors.password && errors.password.type ==="required" && (<p>This is required</p>)}
           {errors.password && errors.password.type === "minLength" && (<p>Password must be 6 characters or more</p>)}
-        </div>
+        </FormGroup>
         {/* Date */}
-        <div className='form-group'>
-          <label htmlFor='date'>Date of Event</label>
-          <input ref={register({ required: true })} type='text' name='date' />
+        <FormGroup>
+          <Input ref={register({ required: true })} type='text' name='date' placeholder='Date of Event'/>
           {errors.date && <p>This is required</p>}
-        </div>
+        </FormGroup>
         {/* Location */}
-        <div className='form-group'>
-          <label htmlFor='location'>Event Location</label>
-          <input
+        <FormGroup>
+          <Input
             ref={register({ required: true })}
             type='text'
             name='location'
+            placeholder = 'Location of Event'
           />
           {errors.location && <p>This is required</p>}
-        </div>
-        <input type='submit' 
+        </FormGroup>
+        <Input submit type='submit' 
         />
       </form>
-    </div>
+    </FormContainer>
   );
 };
 

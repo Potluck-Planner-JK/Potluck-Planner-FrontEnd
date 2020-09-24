@@ -1,6 +1,10 @@
 import React from 'react';
 import {useForm} from 'react-hook-form';
 import axios from 'axios'
+import { FormContainer, FormGroup, Input, Header } from '../../Styled/Forms';
+
+
+
 
 export const Login = () => {
   const {register, handleSubmit, watch, errors} = useForm();
@@ -17,37 +21,41 @@ export const Login = () => {
   }
 
   return (
-    <div className='form-container'>
-      <h1>
-        Potluck <span className='text-primary'>Login</span>
-      </h1>
+    <FormContainer>
+      <Header>
+       <span className='text-primary'>Potluck Login</span>
+      </Header>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className='form-group'>
-          <label htmlFor='name'>Event Name</label>
-          <input
+        <FormGroup>
+          <Input
             ref={register({required: true})}
             type='text'
             name='username'
+            placeholder= 'Event Name'
           />
-        </div>
+          {errors.username && <p>Please enter your event name</p>}
+        </FormGroup>
 
-        <div className='form-group'>
+        <FormGroup>
           <label htmlFor='password'>Password</label>
-          <input
-            ref={register({required: true})}
+          <Input
+            ref={register({required: true, minLength: 6})}
             type='password'
             name='password'
+            placeholder='Event Password'
           />
-        </div>
+          {errors.password && errors.password.type ==="required" && (<p>Please enter your password</p>)}
+          {errors.password && errors.password.type === "minLength" && (<p>Password must be 6 characters or more</p>)}
+        </FormGroup>
 
-        <input
+        <Input submit
           ref={register({required: true})}
           type='submit'
+          name='submit'
           value='Login'
-          className='btn btn-primary btn-block'
         />
       </form>
-    </div>
+    </FormContainer>
   )
 }
 
