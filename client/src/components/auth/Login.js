@@ -1,10 +1,20 @@
 import React from 'react';
 import {useForm} from 'react-hook-form';
+import axios from 'axios'
 
 export const Login = () => {
   const {register, handleSubmit, watch, errors} = useForm();
 
-  const onSubmit = data => console.log(data)
+  const onSubmit = (data )=> {
+    axios.post('https://potluck-planner-webpt16.herokuapp.com/login', data)
+    .then(res=>{
+      console.log(res)
+      console.log(res.data)
+    })
+    .catch(err=>{
+      console.error(err)
+    })
+  }
 
   return (
     <div className='form-container'>
@@ -17,7 +27,7 @@ export const Login = () => {
           <input
             ref={register({required: true})}
             type='text'
-            name='name'
+            name='username'
           />
         </div>
 
